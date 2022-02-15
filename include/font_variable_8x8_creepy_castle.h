@@ -2,11 +2,12 @@
 
 #include "bn_sprite_font.h"
 #include "bn_sprite_items_font_variable_8x8_creepy_castle.h"
+#include "bn_utf8_characters_map_ref.h"
 
 namespace cr_ca::font
 {
 
-constexpr int8_t variable_8x8_creepy_castle_char_widths[] = {
+inline constexpr int8_t variable_8x8_creepy_castle_char_widths[] = {
     3, // 32
     3, // 33 !
     4, // 34 "
@@ -104,7 +105,8 @@ constexpr int8_t variable_8x8_creepy_castle_char_widths[] = {
     7, // 126 ~
 };
 
-constexpr bn::sprite_font variable_8x8_creepy_castle(bn::sprite_items::font_variable_8x8_creepy_castle,
-                                                     bn::string_view(), variable_8x8_creepy_castle_char_widths);
+inline constexpr bn::sprite_font variable_8x8_creepy_castle(bn::sprite_items::font_variable_8x8_creepy_castle,
+                                                            bn::utf8_characters_map_ref(),
+                                                            variable_8x8_creepy_castle_char_widths);
 
 } // namespace cr_ca::font
