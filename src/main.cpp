@@ -2,7 +2,7 @@
 
 #include "Portrait.h"
 
-using namespace cr_ca;
+using namespace crecat;
 
 int main()
 {

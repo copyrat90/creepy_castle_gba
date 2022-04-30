@@ -5,7 +5,7 @@
 #include "bn_sprite_ptr.h"
 #include "bn_vector.h"
 
-namespace cr_ca
+namespace crecat
 {
 
 /**
@@ -44,4 +44,4 @@ private:
     bn::vector<bn::sprite_ptr, 4> sprites_;
 };
 
-} // namespace cr_ca
+} // namespace crecat

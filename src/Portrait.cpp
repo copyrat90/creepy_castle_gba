@@ -5,7 +5,7 @@
 #include "bn_sprite_items_spr_portrait_butterfly_left.h"
 #include "bn_sprite_items_spr_portrait_butterfly_right.h"
 
-namespace cr_ca
+namespace crecat
 {
 
 namespace
@@ -103,4 +103,4 @@ void Portrait::AllocateGraphics()
     }
 }
 
-} // namespace cr_ca
+} // namespace crecat
