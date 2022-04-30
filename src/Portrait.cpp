@@ -18,79 +18,79 @@ constexpr bn::fixed OFFSET_RIGHT = +44;
 
 } // namespace
 
-Portrait::Portrait(Portrait::Kind kind, const bn::fixed_point& position) : kind_(kind), position_(position)
+Portrait::Portrait(Portrait::Kind kind, const bn::fixed_point& position) : _kind(kind), _position(position)
 {
 }
 
-Portrait::Portrait(Portrait::Kind kind, bn::fixed x, bn::fixed y) : kind_(kind), position_(x, y)
+Portrait::Portrait(Portrait::Kind kind, bn::fixed x, bn::fixed y) : _kind(kind), _position(x, y)
 {
 }
 
-const bn::fixed_point& Portrait::Position() const
+const bn::fixed_point& Portrait::position() const
 {
-    return position_;
+    return _position;
 }
 
-bn::fixed Portrait::X() const
+bn::fixed Portrait::x() const
 {
-    return position_.x();
+    return _position.x();
 }
 
-bn::fixed Portrait::Y() const
+bn::fixed Portrait::y() const
 {
-    return position_.y();
+    return _position.y();
 }
 
-void Portrait::SetPosition(const bn::fixed_point& position)
+void Portrait::setPosition(const bn::fixed_point& position)
 {
-    SetPosition(position.x(), position.y());
+    setPosition(position.x(), position.y());
 }
 
-void Portrait::SetPosition(bn::fixed x, bn::fixed y)
+void Portrait::setPosition(bn::fixed x, bn::fixed y)
 {
-    position_ = {x, y};
-    if (!sprites_.empty())
+    _position = {x, y};
+    if (!_sprites.empty())
     {
-        sprites_[0].set_position({x + OFFSET_LEFT, y + OFFSET_TOP});
-        sprites_[1].set_position({x + OFFSET_LEFT, y + OFFSET_BOTTOM});
-        sprites_[2].set_position({x + OFFSET_RIGHT, y + OFFSET_TOP});
-        sprites_[3].set_position({x + OFFSET_RIGHT, y + OFFSET_BOTTOM});
+        _sprites[0].set_position({x + OFFSET_LEFT, y + OFFSET_TOP});
+        _sprites[1].set_position({x + OFFSET_LEFT, y + OFFSET_BOTTOM});
+        _sprites[2].set_position({x + OFFSET_RIGHT, y + OFFSET_TOP});
+        _sprites[3].set_position({x + OFFSET_RIGHT, y + OFFSET_BOTTOM});
     }
 }
 
-void Portrait::SetX(bn::fixed x)
+void Portrait::setX(bn::fixed x)
 {
-    SetPosition(x, position_.y());
+    setPosition(x, _position.y());
 }
 
-void Portrait::SetY(bn::fixed y)
+void Portrait::setY(bn::fixed y)
 {
-    SetPosition(position_.x(), y);
+    setPosition(_position.x(), y);
 }
 
-void Portrait::FreeGraphics()
+void Portrait::freeGraphics()
 {
-    sprites_.clear();
+    _sprites.clear();
 }
 
-void Portrait::AllocateGraphics()
+void Portrait::allocateGraphics()
 {
-    if (!sprites_.empty())
+    if (!_sprites.empty())
         return;
 
-    const bn::fixed top = position_.y() + OFFSET_TOP;
-    const bn::fixed bottom = position_.y() + OFFSET_BOTTOM;
-    const bn::fixed left = position_.x() + OFFSET_LEFT;
-    const bn::fixed right = position_.x() + OFFSET_RIGHT;
+    const bn::fixed top = _position.y() + OFFSET_TOP;
+    const bn::fixed bottom = _position.y() + OFFSET_BOTTOM;
+    const bn::fixed left = _position.x() + OFFSET_LEFT;
+    const bn::fixed right = _position.x() + OFFSET_RIGHT;
 
     auto pushSprites = [&](const bn::sprite_item& leftPortrait, const bn::sprite_item& rightPortrait) {
-        sprites_.push_back(leftPortrait.create_sprite(left, top, 0));
-        sprites_.push_back(leftPortrait.create_sprite(left, bottom, 1));
-        sprites_.push_back(rightPortrait.create_sprite(right, top, 0));
-        sprites_.push_back(rightPortrait.create_sprite(right, bottom, 1));
+        _sprites.push_back(leftPortrait.create_sprite(left, top, 0));
+        _sprites.push_back(leftPortrait.create_sprite(left, bottom, 1));
+        _sprites.push_back(rightPortrait.create_sprite(right, top, 0));
+        _sprites.push_back(rightPortrait.create_sprite(right, bottom, 1));
     };
 
-    switch (kind_)
+    switch (_kind)
     {
         using namespace bn::sprite_items;
     case Portrait::Kind::EMPTY:
@@ -99,7 +99,7 @@ void Portrait::AllocateGraphics()
         pushSprites(spr_portrait_butterfly_left, spr_portrait_butterfly_right);
         break;
     default:
-        BN_ERROR("Invalid Portrait::Kind: ", static_cast<int>(kind_));
+        BN_ERROR("Invalid Portrait::Kind: ", static_cast<int>(_kind));
     }
 }
 

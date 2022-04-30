@@ -25,23 +25,23 @@ public:
     Portrait(Portrait::Kind kind, const bn::fixed_point& position);
     Portrait(Portrait::Kind kind, bn::fixed x, bn::fixed y);
 
-    const bn::fixed_point& Position() const;
-    bn::fixed X() const;
-    bn::fixed Y() const;
+    const bn::fixed_point& position() const;
+    bn::fixed x() const;
+    bn::fixed y() const;
 
-    void SetPosition(const bn::fixed_point& position);
-    void SetPosition(bn::fixed x, bn::fixed y);
-    void SetX(bn::fixed x);
-    void SetY(bn::fixed y);
+    void setPosition(const bn::fixed_point& position);
+    void setPosition(bn::fixed x, bn::fixed y);
+    void setX(bn::fixed x);
+    void setY(bn::fixed y);
 
-    void FreeGraphics();
-    void AllocateGraphics();
+    void freeGraphics();
+    void allocateGraphics();
 
 private:
-    Portrait::Kind kind_;
-    bn::fixed_point position_;
+    Portrait::Kind _kind;
+    bn::fixed_point _position;
     // top-left, bottom-left, top-right, bottom-right
-    bn::vector<bn::sprite_ptr, 4> sprites_;
+    bn::vector<bn::sprite_ptr, 4> _sprites;
 };
 
 } // namespace crecat

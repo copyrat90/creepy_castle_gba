@@ -9,7 +9,7 @@ int main()
     bn::core::init();
 
     Portrait butterfly(Portrait::Kind::BUTTERFLY, 0, 0);
-    butterfly.AllocateGraphics();
+    butterfly.allocateGraphics();
 
     while (true)
     {
