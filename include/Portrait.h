@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IEntity.h"
+
 #include "bn_fixed_point.h"
 #include "bn_sprite_item.h"
 #include "bn_sprite_ptr.h"
@@ -13,7 +15,7 @@ namespace crecat
  * Graphics are not allocated by default.
  *
  */
-class Portrait
+class Portrait final : public IEntity
 {
 public:
     enum class Kind
@@ -25,17 +27,13 @@ public:
     Portrait(Portrait::Kind kind, const bn::fixed_point& position);
     Portrait(Portrait::Kind kind, bn::fixed x, bn::fixed y);
 
-    const bn::fixed_point& position() const;
-    bn::fixed x() const;
-    bn::fixed y() const;
+    void setPosition(const bn::fixed_point& position) final;
+    void setPosition(bn::fixed x, bn::fixed y) final;
+    void setX(bn::fixed x) final;
+    void setY(bn::fixed y) final;
 
-    void setPosition(const bn::fixed_point& position);
-    void setPosition(bn::fixed x, bn::fixed y);
-    void setX(bn::fixed x);
-    void setY(bn::fixed y);
-
-    void freeGraphics();
-    void allocateGraphics();
+    void freeGraphics() final;
+    void allocateGraphics() final;
 
 private:
     Portrait::Kind _kind;

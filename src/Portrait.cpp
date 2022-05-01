@@ -18,27 +18,12 @@ constexpr bn::fixed OFFSET_RIGHT = +44;
 
 } // namespace
 
-Portrait::Portrait(Portrait::Kind kind, const bn::fixed_point& position) : _kind(kind), _position(position)
+Portrait::Portrait(Portrait::Kind kind, const bn::fixed_point& position) : IEntity(position), _kind(kind)
 {
 }
 
-Portrait::Portrait(Portrait::Kind kind, bn::fixed x, bn::fixed y) : _kind(kind), _position(x, y)
+Portrait::Portrait(Portrait::Kind kind, bn::fixed x, bn::fixed y) : IEntity(x, y), _kind(kind)
 {
-}
-
-const bn::fixed_point& Portrait::position() const
-{
-    return _position;
-}
-
-bn::fixed Portrait::x() const
-{
-    return _position.x();
-}
-
-bn::fixed Portrait::y() const
-{
-    return _position.y();
 }
 
 void Portrait::setPosition(const bn::fixed_point& position)
@@ -48,7 +33,7 @@ void Portrait::setPosition(const bn::fixed_point& position)
 
 void Portrait::setPosition(bn::fixed x, bn::fixed y)
 {
-    _position = {x, y};
+    IEntity::setPosition(x, y);
     if (!_sprites.empty())
     {
         _sprites[0].set_position({x + OFFSET_LEFT, y + OFFSET_TOP});

@@ -1,6 +1,6 @@
 #include "bn_core.h"
 
-#include "Portrait.h"
+#include "tests.h"
 
 using namespace crecat;
 
@@ -8,11 +8,9 @@ int main()
 {
     bn::core::init();
 
-    Portrait butterfly(Portrait::Kind::BUTTERFLY, 0, 0);
-    butterfly.allocateGraphics();
-
     while (true)
     {
+        tests::testObserverPattern();
         bn::core::update();
     }
 }
