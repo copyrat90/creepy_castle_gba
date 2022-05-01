@@ -1,15 +1,15 @@
-#include "IObservableEntity.h"
+#include "entity/IObservableEntity.h"
 
 #include "bn_log.h"
 
-#include "IObserver.h"
+#include "system/IObserver.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 IObservableEntity::~IObservableEntity() = default;
 
-auto IObservableEntity::addObserver(IObserver* observer) -> ObserverListType::const_iterator
+auto IObservableEntity::addObserver(system::IObserver* observer) -> ObserverListType::const_iterator
 {
     if (!observer)
         BN_ERROR("Storing nullptr observer inside IObservableEntity");
@@ -22,10 +22,10 @@ void IObservableEntity::removeObserver(ObserverListType::const_iterator it)
     _observers.erase(it);
 }
 
-void IObservableEntity::notify(EventArgs eventArgs)
+void IObservableEntity::notify(system::EventArgs eventArgs)
 {
     for (auto& observer : _observers)
         observer->onNotify(eventArgs);
 }
 
-} // namespace crecat
+} // namespace crecat::entity

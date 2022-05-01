@@ -1,13 +1,13 @@
 #pragma once
 
-#include "IEntity.h"
+#include "entity/IEntity.h"
 
 #include "bn_fixed_point.h"
 #include "bn_sprite_item.h"
 #include "bn_sprite_ptr.h"
 #include "bn_vector.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 /**
@@ -42,4 +42,4 @@ private:
     bn::vector<bn::sprite_ptr, 4> _sprites;
 };
 
-} // namespace crecat
+} // namespace crecat::entity

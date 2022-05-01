@@ -1,14 +1,14 @@
 #pragma once
 
-#include "IObservableEntity.h"
+#include "entity/IObservableEntity.h"
 
 #include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_vector.h"
 
-#include "EventArgs.h"
+#include "system/EventArgs.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 class Player final : public IObservableEntity
@@ -35,4 +35,4 @@ public:
     int exp() const;
 };
 
-} // namespace crecat
+} // namespace crecat::entity

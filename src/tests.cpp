@@ -6,9 +6,9 @@
 #include "bn_log.h"
 #include "bn_vector.h"
 
-#include "EventArgs.h"
-#include "IObservableEntity.h"
-#include "IObserver.h"
+#include "entity/IObservableEntity.h"
+#include "system/EventArgs.h"
+#include "system/IObserver.h"
 
 namespace crecat::tests
 {
@@ -25,10 +25,10 @@ void testObserverPattern()
          achievements.
          *
          */
-        class TestObserver final : public IObserver
+        class TestObserver final : public system::IObserver
         {
         private:
-            void onNotify(EventArgs eventArgs) final
+            void onNotify(system::EventArgs eventArgs) final
             {
                 BN_LOG(bn::format<28>("eventArgs={} fired!", static_cast<int>(eventArgs)));
             }
@@ -39,7 +39,7 @@ void testObserverPattern()
          * This can be, for example, a Player Character.
          *
          */
-        class TestSubject final : public IObservableEntity
+        class TestSubject final : public entity::IObservableEntity
         {
         public:
             void update() final
@@ -47,13 +47,13 @@ void testObserverPattern()
                 IObservableEntity::update();
 
                 if (bn::keypad::a_pressed())
-                    notify(EventArgs::TEST_A_PRESSED);
+                    notify(system::EventArgs::TEST_A_PRESSED);
                 if (bn::keypad::b_pressed())
-                    notify(EventArgs::TEST_B_PRESSED);
+                    notify(system::EventArgs::TEST_B_PRESSED);
                 if (bn::keypad::start_pressed())
-                    notify(EventArgs::TEST_START_PRESSED);
+                    notify(system::EventArgs::TEST_START_PRESSED);
                 if (bn::keypad::select_pressed())
-                    notify(EventArgs::TEST_SELECT_PRESSED);
+                    notify(system::EventArgs::TEST_SELECT_PRESSED);
             }
         };
 

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace crecat
+namespace crecat::system
 {
 
 enum class EventArgs
@@ -17,4 +17,4 @@ enum class EventArgs
     PLAYER_BATTLE_DAMAGE_2,
 };
 
-} // namespace crecat
+} // namespace crecat::system

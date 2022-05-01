@@ -1,6 +1,6 @@
-#include "IEntity.h"
+#include "entity/IEntity.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 IEntity::~IEntity() = default;
@@ -50,4 +50,4 @@ void IEntity::setY(bn::fixed y)
     _position.set_y(y);
 }
 
-} // namespace crecat
+} // namespace crecat::entity

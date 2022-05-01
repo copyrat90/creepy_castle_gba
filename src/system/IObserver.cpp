@@ -1,9 +1,9 @@
-#include "IObserver.h"
+#include "system/IObserver.h"
 
-namespace crecat
+namespace crecat::system
 {
 
-void IObserver::observeEntity(IObservableEntity& entity)
+void IObserver::observeEntity(entity::IObservableEntity& entity)
 {
     auto it = entity.addObserver(this);
     _observedEntities.push_back(&entity);
@@ -16,4 +16,4 @@ IObserver::~IObserver()
         _observedEntities[i]->removeObserver(_observedEntitiesIters[i]);
 }
 
-} // namespace crecat
+} // namespace crecat::system

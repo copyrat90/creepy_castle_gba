@@ -1,6 +1,6 @@
-#include "Player.h"
+#include "entity/Player.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 Player::Player(int hp, int level, int exp) : _hp(hp), _level(level), _exp(exp)
@@ -21,7 +21,7 @@ void Player::expUp()
     {
         ++_level;
         _exp = 0;
-        notify(EventArgs::PLAYER_LEVEL_UP);
+        notify(system::EventArgs::PLAYER_LEVEL_UP);
     }
 }
 
@@ -40,4 +40,4 @@ int Player::exp() const
     return _exp;
 }
 
-} // namespace crecat
+} // namespace crecat::entity

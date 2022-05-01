@@ -4,7 +4,7 @@
 #include "bn_sprite_items_font_variable_8x8_creepy_castle.h"
 #include "bn_utf8_characters_map_ref.h"
 
-namespace crecat::font
+namespace crecat::asset::font
 {
 
 inline constexpr int8_t variable_8x8_creepy_castle_char_widths[] = {
@@ -109,4 +109,4 @@ inline constexpr bn::sprite_font variable_8x8_creepy_castle(bn::sprite_items::fo
                                                             bn::utf8_characters_map_ref(),
                                                             variable_8x8_creepy_castle_char_widths);
 
-} // namespace crecat::font
+} // namespace crecat::asset::font

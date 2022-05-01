@@ -2,9 +2,9 @@
 
 #include "bn_vector.h"
 
-#include "IObservableEntity.h"
+#include "entity/IObservableEntity.h"
 
-namespace crecat
+namespace crecat::system
 {
 
 /**
@@ -15,18 +15,19 @@ namespace crecat
  */
 class IObserver
 {
-    friend class IObservableEntity;
+    friend class entity::IObservableEntity;
 
 public:
     static constexpr int MAX_OBSERVED_ENTITIES = 3;
 
 private:
     // We have to store observed entities and its iterator.
-    bn::vector<IObservableEntity*, MAX_OBSERVED_ENTITIES> _observedEntities;
-    bn::vector<IObservableEntity::ObserverListType::const_iterator, MAX_OBSERVED_ENTITIES> _observedEntitiesIters;
+    bn::vector<entity::IObservableEntity*, MAX_OBSERVED_ENTITIES> _observedEntities;
+    bn::vector<entity::IObservableEntity::ObserverListType::const_iterator, MAX_OBSERVED_ENTITIES>
+        _observedEntitiesIters;
 
 public:
-    void observeEntity(IObservableEntity& entity);
+    void observeEntity(entity::IObservableEntity& entity);
 
     /**
      * @brief Destroy the Test Observer object
@@ -39,4 +40,4 @@ private:
     virtual void onNotify(EventArgs eventArgs) = 0;
 };
 
-} // namespace crecat
+} // namespace crecat::system

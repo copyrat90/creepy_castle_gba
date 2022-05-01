@@ -2,7 +2,7 @@
 
 #include "bn_fixed_point.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 /**
@@ -37,4 +37,4 @@ private:
     bn::fixed_point _position;
 };
 
-} // namespace crecat
+} // namespace crecat::entity

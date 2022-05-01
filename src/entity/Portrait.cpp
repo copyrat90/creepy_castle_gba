@@ -1,11 +1,11 @@
-#include "Portrait.h"
+#include "entity/Portrait.h"
 
 #include "bn_assert.h"
 
 #include "bn_sprite_items_spr_portrait_butterfly_left.h"
 #include "bn_sprite_items_spr_portrait_butterfly_right.h"
 
-namespace crecat
+namespace crecat::entity
 {
 
 namespace
@@ -88,4 +88,4 @@ void Portrait::allocateGraphics()
     }
 }
 
-} // namespace crecat
+} // namespace crecat::entity
