@@ -12,12 +12,11 @@ namespace crecat::entity
 
 namespace
 {
-constexpr bn::fixed_point OFFSET_LOWER_RIGHT_HEART = {10, 38};
-constexpr bn::fixed OFFSET_Y_INC = -19;
-constexpr bn::fixed OFFSET_X_INC = -21;
+constexpr bn::fixed OFFSET_LOWER_HEART_Y = 44;
+constexpr bn::fixed OFFSET_Y_INC = -10;
 } // namespace
 
-PlayerHpBar::PlayerHpBar() : IEntity(-97, -2), _hp(MAX_HP)
+PlayerHpBar::PlayerHpBar() : IEntity(-84, -1), _hp(MAX_HP)
 {
 }
 
@@ -75,8 +74,7 @@ void PlayerHpBar::allocateGraphics()
 
     for (int i = 0; i < MAX_HP; ++i)
     {
-        const bn::fixed_point pos =
-            position() + OFFSET_LOWER_RIGHT_HEART + bn::fixed_point{(i / 5) * OFFSET_X_INC, (i % 5) * OFFSET_Y_INC};
+        const bn::fixed_point pos = position() + bn::fixed_point{0, OFFSET_LOWER_HEART_Y + i * OFFSET_Y_INC};
         _hpSprites.push_back(bn::sprite_items::spr_player_hp.create_sprite(pos, !(i <= _hp - 1)));
     }
 }
