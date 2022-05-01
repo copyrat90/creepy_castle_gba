@@ -37,7 +37,6 @@ public:
 
 private:
     Portrait::Kind _kind;
-    bn::fixed_point _position;
     // top-left, bottom-left, top-right, bottom-right
     bn::vector<bn::sprite_ptr, 4> _sprites;
 };

@@ -37,7 +37,7 @@ public:
     virtual ~IObserver();
 
 private:
-    virtual void onNotify(EventArgs eventArgs) = 0;
+    virtual void onNotify(EventArg e) = 0;
 };
 
 } // namespace crecat::system

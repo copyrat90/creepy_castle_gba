@@ -45,12 +45,12 @@ void Portrait::setPosition(bn::fixed x, bn::fixed y)
 
 void Portrait::setX(bn::fixed x)
 {
-    setPosition(x, _position.y());
+    setPosition(x, this->y());
 }
 
 void Portrait::setY(bn::fixed y)
 {
-    setPosition(_position.x(), y);
+    setPosition(this->x(), y);
 }
 
 void Portrait::freeGraphics()
@@ -63,10 +63,10 @@ void Portrait::allocateGraphics()
     if (!_sprites.empty())
         return;
 
-    const bn::fixed top = _position.y() + OFFSET_TOP;
-    const bn::fixed bottom = _position.y() + OFFSET_BOTTOM;
-    const bn::fixed left = _position.x() + OFFSET_LEFT;
-    const bn::fixed right = _position.x() + OFFSET_RIGHT;
+    const bn::fixed top = this->y() + OFFSET_TOP;
+    const bn::fixed bottom = this->y() + OFFSET_BOTTOM;
+    const bn::fixed left = this->x() + OFFSET_LEFT;
+    const bn::fixed right = this->x() + OFFSET_RIGHT;
 
     auto pushSprites = [&](const bn::sprite_item& leftPortrait, const bn::sprite_item& rightPortrait) {
         _sprites.push_back(leftPortrait.create_sprite(left, top, 0));

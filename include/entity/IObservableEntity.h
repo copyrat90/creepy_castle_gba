@@ -4,7 +4,7 @@
 
 #include "bn_list.h"
 
-#include "system/EventArgs.h"
+#include "system/EventArg.h"
 
 namespace crecat::system
 {
@@ -18,7 +18,7 @@ namespace crecat::entity
  * @brief Subject class from https://gameprogrammingpatterns.com/observer.html.
  * This can be, for example, a Player Character.
  *
- * Name `IObservable~` and `EventArgs` are borrowed from C#.
+ * Name `IObservable~` and `EventArg` are borrowed from C#.
  *
  */
 class IObservableEntity : public IEntity
@@ -36,7 +36,7 @@ public:
     IObservableEntity(bn::fixed x, bn::fixed y) : IEntity(x, y){};
 
 protected:
-    void notify(system::EventArgs eventArgs);
+    void notify(system::EventArg e);
 
 private:
     [[nodiscard]] auto addObserver(system::IObserver* observer) -> ObserverListType::const_iterator;

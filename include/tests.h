@@ -1,14 +1,13 @@
 #pragma once
 
-#ifdef NDEBUG
-inline constexpr bool ndebug = true;
-#else
-inline constexpr bool ndebug = false;
-#endif
+#if !defined(NDEBUG) && !defined(RELEASE)
 
 namespace crecat::tests
 {
 
 void testObserverPattern();
+void testHud();
 
-}
+} // namespace crecat::tests
+
+#endif

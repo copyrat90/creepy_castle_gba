@@ -7,6 +7,8 @@ namespace crecat::entity
 
 /**
  * @brief a.k.a. IGameObject.
+ * Basically, everything meant to be drawn on screen
+ * should inherit this class (directly or indirectly).
  * Holds `bn::fixed_point` position, and abstract graphic alloc & free functions.
  *
  */

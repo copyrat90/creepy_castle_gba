@@ -22,10 +22,10 @@ void IObservableEntity::removeObserver(ObserverListType::const_iterator it)
     _observers.erase(it);
 }
 
-void IObservableEntity::notify(system::EventArgs eventArgs)
+void IObservableEntity::notify(system::EventArg e)
 {
     for (auto& observer : _observers)
-        observer->onNotify(eventArgs);
+        observer->onNotify(e);
 }
 
 } // namespace crecat::entity
