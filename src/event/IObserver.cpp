@@ -1,6 +1,6 @@
-#include "system/IObserver.h"
+#include "event/IObserver.h"
 
-namespace crecat::system
+namespace crecat::event
 {
 
 void IObserver::observe(IObservable& subject)
@@ -16,4 +16,4 @@ IObserver::~IObserver()
         _subjects[i]->removeObserver(_subjectsIters[i]);
 }
 
-} // namespace crecat::system
+} // namespace crecat::event

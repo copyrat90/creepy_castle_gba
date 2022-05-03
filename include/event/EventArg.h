@@ -1,6 +1,6 @@
 #pragma once
 
-namespace crecat::system
+namespace crecat::event
 {
 
 enum class EventArg
@@ -27,4 +27,4 @@ enum class EventArg
     PLAYER_HP_REGEN_9, // DO NOT CHANGE ORDER!
 };
 
-} // namespace crecat::system
+} // namespace crecat::event

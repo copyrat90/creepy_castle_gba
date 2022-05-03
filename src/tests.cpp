@@ -11,8 +11,8 @@
 #include "entity/Hud.h"
 #include "entity/IObservableEntity.h"
 #include "entity/Player.h"
-#include "system/EventArg.h"
-#include "system/IObserver.h"
+#include "event/EventArg.h"
+#include "event/IObserver.h"
 
 namespace crecat::tests
 {
@@ -27,10 +27,10 @@ void testObserverPattern()
      achievements.
      *
      */
-    class TestObserver final : public system::IObserver
+    class TestObserver final : public event::IObserver
     {
     private:
-        void onNotify(system::EventArg eventArgs) final
+        void onNotify(event::EventArg eventArgs) final
         {
             BN_LOG(bn::format<28>("eventArgs={} fired!", static_cast<int>(eventArgs)));
         }
@@ -47,15 +47,16 @@ void testObserverPattern()
         void update() final
         {
             IObservableEntity::update();
+            using EventArg = event::EventArg;
 
             if (bn::keypad::a_pressed())
-                notify(system::EventArg::TEST_A_PRESSED);
+                notify(EventArg::TEST_A_PRESSED);
             if (bn::keypad::b_pressed())
-                notify(system::EventArg::TEST_B_PRESSED);
+                notify(EventArg::TEST_B_PRESSED);
             if (bn::keypad::start_pressed())
-                notify(system::EventArg::TEST_START_PRESSED);
+                notify(EventArg::TEST_START_PRESSED);
             if (bn::keypad::select_pressed())
-                notify(system::EventArg::TEST_SELECT_PRESSED);
+                notify(EventArg::TEST_SELECT_PRESSED);
         }
     };
 
@@ -79,7 +80,7 @@ void testHud()
     public:
         void update() final
         {
-            using EventArg = system::EventArg;
+            using EventArg = event::EventArg;
             if (bn::keypad::select_held())
             {
                 if (bn::keypad::a_pressed())

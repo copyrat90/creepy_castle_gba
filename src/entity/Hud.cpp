@@ -47,9 +47,9 @@ void Hud::allocateGraphics()
     _playerHpBar.allocateGraphics();
 }
 
-void Hud::onNotify(system::EventArg e)
+void Hud::onNotify(event::EventArg e)
 {
-    using EventArg = system::EventArg;
+    using EventArg = event::EventArg;
 
     switch (e)
     {

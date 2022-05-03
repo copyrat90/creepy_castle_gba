@@ -2,9 +2,9 @@
 
 #include "bn_list.h"
 
-#include "system/EventArg.h"
+#include "event/EventArg.h"
 
-namespace crecat::system
+namespace crecat::event
 {
 
 class IObserver;
@@ -28,14 +28,14 @@ public:
     IObservable() = default;
 
 protected:
-    void notify(system::EventArg e);
+    void notify(EventArg e);
 
 private:
-    [[nodiscard]] auto addObserver(system::IObserver* observer) -> ObserverListType::const_iterator;
+    [[nodiscard]] auto addObserver(IObserver* observer) -> ObserverListType::const_iterator;
     void removeObserver(ObserverListType::const_iterator it);
 
 private:
     ObserverListType _observers;
 };
 
-} // namespace crecat::system
+} // namespace crecat::event

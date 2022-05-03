@@ -1,7 +1,7 @@
 #pragma once
 
 #include "entity/IEntity.h"
-#include "system/IObservable.h"
+#include "event/IObservable.h"
 
 namespace crecat::system
 {
@@ -16,7 +16,7 @@ namespace crecat::entity
  * This can be, for example, a Player Character.
  *
  */
-class IObservableEntity : public IEntity, public system::IObservable
+class IObservableEntity : public IEntity, public event::IObservable
 {
 public:
     virtual ~IObservableEntity() = 0;

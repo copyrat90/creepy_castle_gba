@@ -1,7 +1,7 @@
 #pragma once
 
 #include "entity/IEntity.h"
-#include "system/IObserver.h"
+#include "event/IObserver.h"
 
 #include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
@@ -11,7 +11,7 @@
 namespace crecat::entity
 {
 
-class Hud final : public IEntity, public system::IObserver
+class Hud final : public IEntity, public event::IObserver
 {
 public:
     Hud();
@@ -25,7 +25,7 @@ public:
     void allocateGraphics() final;
 
 private:
-    void onNotify(system::EventArg e) final;
+    void onNotify(event::EventArg e) final;
 
 private:
     bn::optional<bn::regular_bg_ptr> _hudBg;

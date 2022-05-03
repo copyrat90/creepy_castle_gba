@@ -2,9 +2,9 @@
 
 #include "bn_vector.h"
 
-#include "system/IObservable.h"
+#include "event/IObservable.h"
 
-namespace crecat::system
+namespace crecat::event
 {
 
 /**
@@ -39,4 +39,4 @@ private:
     virtual void onNotify(EventArg e) = 0;
 };
 
-} // namespace crecat::system
+} // namespace crecat::event

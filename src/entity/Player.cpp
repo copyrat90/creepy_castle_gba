@@ -21,11 +21,11 @@ void Player::expUp()
     {
         ++_level;
         _exp = 0;
-        notify(system::EventArg::PLAYER_LEVEL_UP);
+        notify(event::EventArg::PLAYER_LEVEL_UP);
     }
     else
     {
-        notify(system::EventArg::PLAYER_EXP_UP);
+        notify(event::EventArg::PLAYER_EXP_UP);
     }
 }
 
