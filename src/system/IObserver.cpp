@@ -3,17 +3,17 @@
 namespace crecat::system
 {
 
-void IObserver::observeEntity(entity::IObservableEntity& entity)
+void IObserver::observe(IObservable& subject)
 {
-    auto it = entity.addObserver(this);
-    _observedEntities.push_back(&entity);
-    _observedEntitiesIters.push_back(it);
+    auto it = subject.addObserver(this);
+    _subjects.push_back(&subject);
+    _subjectsIters.push_back(it);
 }
 
 IObserver::~IObserver()
 {
-    for (int i = 0; i < _observedEntities.size(); ++i)
-        _observedEntities[i]->removeObserver(_observedEntitiesIters[i]);
+    for (int i = 0; i < _subjects.size(); ++i)
+        _subjects[i]->removeObserver(_subjectsIters[i]);
 }
 
 } // namespace crecat::system

@@ -61,7 +61,7 @@ void testObserverPattern()
 
     TestObserver observer;
     TestSubject subject;
-    observer.observeEntity(subject);
+    observer.observe(subject);
 
     while (true)
     {
@@ -94,7 +94,7 @@ void testHud()
 
     TestSubject subject;
     entity::Hud hud;
-    hud.observeEntity(subject);
+    hud.observe(subject);
     hud.allocateGraphics();
 
     while (true)

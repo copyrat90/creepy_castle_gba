@@ -2,7 +2,7 @@
 
 #include "bn_vector.h"
 
-#include "entity/IObservableEntity.h"
+#include "system/IObservable.h"
 
 namespace crecat::system
 {
@@ -15,23 +15,22 @@ namespace crecat::system
  */
 class IObserver
 {
-    friend class entity::IObservableEntity;
+    friend class IObservable;
 
 public:
-    static constexpr int MAX_OBSERVED_ENTITIES = 3;
+    static constexpr int MAX_SUBJECTS = 3;
 
 private:
-    // We have to store observed entities and its iterator.
-    bn::vector<entity::IObservableEntity*, MAX_OBSERVED_ENTITIES> _observedEntities;
-    bn::vector<entity::IObservableEntity::ObserverListType::const_iterator, MAX_OBSERVED_ENTITIES>
-        _observedEntitiesIters;
+    // We have to store observed subjects and their iterator.
+    bn::vector<IObservable*, MAX_SUBJECTS> _subjects;
+    bn::vector<IObservable::ObserverListType::const_iterator, MAX_SUBJECTS> _subjectsIters;
 
 public:
-    void observeEntity(entity::IObservableEntity& entity);
+    void observe(IObservable& subject);
 
     /**
      * @brief Destroy the Test Observer object
-     * Let's stop observing all entities here, using stored entites and iterators.
+     * Let's stop observing all subjects here, using stored subjects and iterators.
      *
      */
     virtual ~IObserver();

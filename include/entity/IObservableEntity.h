@@ -1,10 +1,7 @@
 #pragma once
 
 #include "entity/IEntity.h"
-
-#include "bn_list.h"
-
-#include "system/EventArg.h"
+#include "system/IObservable.h"
 
 namespace crecat::system
 {
@@ -15,35 +12,20 @@ namespace crecat::entity
 {
 
 /**
- * @brief Subject class from https://gameprogrammingpatterns.com/observer.html.
+ * @brief IEntity + IObservable.
  * This can be, for example, a Player Character.
  *
- * Name `IObservable~` and `EventArg` are borrowed from C#.
- *
  */
-class IObservableEntity : public IEntity
+class IObservableEntity : public IEntity, public system::IObservable
 {
-    friend class system::IObserver;
-
 public:
-    static constexpr int MAX_OBSERVERS = 3;
-    using ObserverListType = bn::list<system::IObserver*, MAX_OBSERVERS>;
-
     virtual ~IObservableEntity() = 0;
 
     IObservableEntity() = default;
     IObservableEntity(const bn::fixed_point& position) : IEntity(position){};
     IObservableEntity(bn::fixed x, bn::fixed y) : IEntity(x, y){};
-
-protected:
-    void notify(system::EventArg e);
-
-private:
-    [[nodiscard]] auto addObserver(system::IObserver* observer) -> ObserverListType::const_iterator;
-    void removeObserver(ObserverListType::const_iterator it);
-
-private:
-    ObserverListType _observers;
 };
+
+inline IObservableEntity::~IObservableEntity() = default;
 
 } // namespace crecat::entity
