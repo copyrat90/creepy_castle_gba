@@ -20,18 +20,34 @@ void testObserverPattern()
 {
     BN_LOG("[TEST] tests::testObserverPattern()");
 
+    struct MyEventArg
+    {
+        int x, y;
+    };
+
     /**
      * @brief Test Observer.
      * This can be, for example, an Achievement System, where it observes game's state an unlock some
      achievements.
      *
      */
-    class TestObserver final : public event::IObserver<event::EventArg>
+    class TestObserver final
+        : public event::IObserver<event::EventArg>,
+          public event::IObserver<MyEventArg> // Multiple inheritance of IObserver<EArg> is allowed.
     {
+    public:
+        // You should do this to overload 2 parents' observe().
+        using event::IObserver<event::EventArg>::observe;
+        using event::IObserver<MyEventArg>::observe;
+
     private:
-        void onNotify(event::EventArg eventArgs) final
+        void onNotify(event::EventArg eventArg) final
         {
-            BN_LOG(bn::format<28>("eventArgs={} fired!", static_cast<int>(eventArgs)));
+            BN_LOG(bn::format<28>("eventArg={} fired!", static_cast<int>(eventArg)));
+        }
+        void onNotify(MyEventArg myEventArg) final
+        {
+            BN_LOG(bn::format<28>("myEventArg=<{},{}>", myEventArg.x, myEventArg.y));
         }
     };
 
@@ -40,13 +56,12 @@ void testObserverPattern()
      * This can be, for example, a Player Character.
      *
      */
-    class TestSubject final : public entity::IEntity, public event::IObservable<event::EventArg>
+    class TestSubject1 final : public entity::IEntity, public event::IObservable<event::EventArg>
     {
     public:
         void update() final
         {
             using EventArg = event::EventArg;
-
             if (bn::keypad::a_pressed())
                 notify(EventArg::TEST_A_PRESSED);
             if (bn::keypad::b_pressed())
@@ -58,13 +73,28 @@ void testObserverPattern()
         }
     };
 
+    class TestSubject2 final : public entity::IEntity, public event::IObservable<MyEventArg>
+    {
+    public:
+        void update() final
+        {
+            if (bn::keypad::a_pressed())
+                notify({0, 1});
+            if (bn::keypad::b_pressed())
+                notify({1, 0});
+        }
+    };
+
     TestObserver observer;
-    TestSubject subject;
-    observer.observe(subject);
+    TestSubject1 subject1;
+    TestSubject2 subject2;
+    observer.observe(subject1);
+    observer.observe(subject2);
 
     while (true)
     {
-        subject.update();
+        subject1.update();
+        subject2.update();
         bn::core::update();
     }
 }
