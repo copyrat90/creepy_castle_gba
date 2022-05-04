@@ -1,15 +1,18 @@
 #pragma once
 
-#include "entity/IObservableEntity.h"
+#include "entity/IEntity.h"
+#include "event/IObserve.h"
 
 #include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_vector.h"
 
+#include "event/EventArg.h"
+
 namespace crecat::entity
 {
 
-class Player final : public IObservableEntity
+class Player final : public IEntity, public event::IObservable<event::EventArg>
 {
 public:
     static constexpr int MAX_HP = 10;

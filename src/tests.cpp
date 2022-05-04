@@ -9,10 +9,9 @@
 #include "bn_vector.h"
 
 #include "entity/Hud.h"
-#include "entity/IObservableEntity.h"
 #include "entity/Player.h"
 #include "event/EventArg.h"
-#include "event/IObserver.h"
+#include "event/IObserve.h"
 
 namespace crecat::tests
 {
@@ -27,7 +26,7 @@ void testObserverPattern()
      achievements.
      *
      */
-    class TestObserver final : public event::IObserver
+    class TestObserver final : public event::IObserver<event::EventArg>
     {
     private:
         void onNotify(event::EventArg eventArgs) final
@@ -41,12 +40,11 @@ void testObserverPattern()
      * This can be, for example, a Player Character.
      *
      */
-    class TestSubject final : public entity::IObservableEntity
+    class TestSubject final : public entity::IEntity, public event::IObservable<event::EventArg>
     {
     public:
         void update() final
         {
-            IObservableEntity::update();
             using EventArg = event::EventArg;
 
             if (bn::keypad::a_pressed())
@@ -75,7 +73,7 @@ void testHud()
 {
     BN_LOG("[TEST] tests::testHud()");
 
-    class TestSubject final : public entity::IObservableEntity
+    class TestSubject final : public entity::IEntity, public event::IObservable<event::EventArg>
     {
     public:
         void update() final

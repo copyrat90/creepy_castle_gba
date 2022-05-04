@@ -1,17 +1,18 @@
 #pragma once
 
 #include "entity/IEntity.h"
-#include "event/IObserver.h"
+#include "event/IObserve.h"
 
 #include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
 
 #include "entity/PlayerHpBar.h"
+#include "event/EventArg.h"
 
 namespace crecat::entity
 {
 
-class Hud final : public IEntity, public event::IObserver
+class Hud final : public IEntity, public event::IObserver<event::EventArg>
 {
 public:
     Hud();
