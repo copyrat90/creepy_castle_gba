@@ -1,5 +1,6 @@
 #pragma once
 
+#include "bn_assert.h"
 #include "bn_list.h"
 #include "bn_vector.h"
 
@@ -38,7 +39,7 @@ public:
     }
 
     /**
-     * @brief Destroy the Test Observer object
+     * @brief Destroy the IObserver.
      * Let's stop observing all subjects here, using stored subjects and iterators.
      *
      */
@@ -46,6 +47,27 @@ public:
     {
         for (int i = 0; i < _subjects.size(); ++i)
             _subjects[i]->removeObserver(_subjectsIters[i]);
+    }
+
+private:
+    /**
+     * @brief Remove subject from the observed list.
+     * This takes O(_subjects.size()) time, should be improved later.
+     *
+     * Unfortunately, storing each other's iterators and removing both on O(1) turns out to be a tricky task.
+     *
+     * @param `subject` subject to be deleted
+     */
+    void removeSubject(IObservable<EArg>* subject)
+    {
+        int removedIdx = 0;
+        for (; removedIdx < _subjects.size(); ++removedIdx)
+            if (_subjects[removedIdx] == subject)
+                break;
+        BN_ASSERT(removedIdx < _subjects.size());
+
+        _subjects.erase(_subjects.cbegin() + removedIdx);
+        _subjectsIters.erase(_subjectsIters.cbegin() + removedIdx);
     }
 
 private:
@@ -68,7 +90,11 @@ public:
     static constexpr int MAX_OBSERVERS = 3;
     using ObserverListType = bn::list<IObserver<EArg>*, MAX_OBSERVERS>;
 
-    virtual ~IObservable() = 0;
+    virtual ~IObservable()
+    {
+        for (auto& observer : _observers)
+            observer->removeSubject(this);
+    }
 
     IObservable() = default;
 
@@ -88,6 +114,12 @@ private:
         return _observers.cbegin();
     }
 
+    /**
+     * @brief Removes observer.
+     * This takes O(1) time, as it uses iterator.
+     *
+     * @param `it` Iterator pointing observer to be deleted.
+     */
     void removeObserver(typename ObserverListType::const_iterator it)
     {
         _observers.erase(it);
@@ -96,8 +128,5 @@ private:
 private:
     ObserverListType _observers;
 };
-
-template <typename EArg>
-IObservable<EArg>::~IObservable() = default;
 
 } // namespace crecat::event
