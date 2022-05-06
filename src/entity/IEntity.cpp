@@ -1,5 +1,7 @@
 #include "entity/IEntity.h"
 
+#include "bn_assert.h"
+
 namespace crecat::entity
 {
 
@@ -13,6 +15,11 @@ IEntity::IEntity(const bn::fixed_point& position)
 IEntity::IEntity(bn::fixed x, bn::fixed y)
 {
     setPosition(x, y);
+}
+
+bool IEntity::graphicsAllocated() const
+{
+    return _graphicsAllocated;
 }
 
 const bn::fixed_point& IEntity::position() const
@@ -48,6 +55,18 @@ void IEntity::setX(bn::fixed x)
 void IEntity::setY(bn::fixed y)
 {
     _position.set_y(y);
+}
+
+void IEntity::freeGraphics()
+{
+    BN_ASSERT(_graphicsAllocated, "Tried to free graphics that isn't allocated");
+    _graphicsAllocated = false;
+}
+
+void IEntity::allocateGraphics()
+{
+    BN_ASSERT(!_graphicsAllocated, "Tried to allocate graphics when it is already allocated");
+    _graphicsAllocated = true;
 }
 
 } // namespace crecat::entity

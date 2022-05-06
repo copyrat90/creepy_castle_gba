@@ -10,8 +10,8 @@
 
 #include "entity/Hud.h"
 #include "entity/Player.h"
-#include "event/EventArg.h"
 #include "event/IObserve.h"
+#include "event/arg/Signal.h"
 
 namespace crecat::tests
 {
@@ -32,16 +32,16 @@ void testObserverPattern()
      *
      */
     class TestObserver final
-        : public event::IObserver<event::EventArg>,
+        : public event::IObserver<event::arg::Signal>,
           public event::IObserver<MyEventArg> // Multiple inheritance of IObserver<EArg> is allowed.
     {
     public:
         // You should do this to overload 2 parents' observe().
-        using event::IObserver<event::EventArg>::observe;
+        using event::IObserver<event::arg::Signal>::observe;
         using event::IObserver<MyEventArg>::observe;
 
     private:
-        void onNotify(event::EventArg eventArg) final
+        void onNotify(event::arg::Signal eventArg) final
         {
             BN_LOG(bn::format<28>("eventArg={} fired!", static_cast<int>(eventArg)));
         }
@@ -56,12 +56,12 @@ void testObserverPattern()
      * This can be, for example, a Player Character.
      *
      */
-    class TestSubject1 final : public entity::IEntity, public event::IObservable<event::EventArg>
+    class TestSubject1 final : public entity::IEntity, public event::IObservable<event::arg::Signal>
     {
     public:
         void update() final
         {
-            using EventArg = event::EventArg;
+            using EventArg = event::arg::Signal;
             if (bn::keypad::a_pressed())
                 notify(EventArg::TEST_A_PRESSED);
             if (bn::keypad::b_pressed())
@@ -103,32 +103,51 @@ void testHud()
 {
     BN_LOG("[TEST] tests::testHud()");
 
-    class TestSubject final : public entity::IEntity, public event::IObservable<event::EventArg>
+    class TestPlayer final : public entity::IEntity, public event::IObservable<event::arg::PlayerEArg>
     {
     public:
         void update() final
         {
-            using EventArg = event::EventArg;
+            using EventArg = event::arg::PlayerEArg;
             if (bn::keypad::select_held())
             {
                 if (bn::keypad::a_pressed())
-                    notify(EventArg::PLAYER_DAMAGE_1);
+                    notify({EventArg::Type::DAMAGE, 1});
                 else if (bn::keypad::b_pressed())
-                    notify(EventArg::PLAYER_DAMAGE_2);
+                    notify({EventArg::Type::DAMAGE, 2});
                 else if (bn::keypad::up_pressed())
-                    notify(EventArg::PLAYER_HP_REGEN_1);
+                    notify({EventArg::Type::HP_REGEN, 1});
             }
         }
     };
 
-    TestSubject subject;
+    class TestEnemy final : public entity::IEntity, public event::IObservable<event::arg::EnemyEArg>
+    {
+    public:
+        void update() final
+        {
+            using EventArg = event::arg::EnemyEArg;
+            if (bn::keypad::select_held())
+            {
+                if (bn::keypad::l_pressed())
+                    notify({EventArg::Type::DAMAGE, 0, "Monsoon"});
+                else if (bn::keypad::r_pressed())
+                    notify({EventArg::Type::DAMAGE, 0, "Ant Queen"});
+            }
+        }
+    };
+
+    TestPlayer player;
+    TestEnemy enemy;
     entity::Hud hud;
-    hud.observe(subject);
+    hud.observe(player);
+    hud.observe(enemy);
     hud.allocateGraphics();
 
     while (true)
     {
-        subject.update();
+        player.update();
+        enemy.update();
         bn::core::update();
     }
 }

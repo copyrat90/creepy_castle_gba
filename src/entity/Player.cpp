@@ -9,23 +9,26 @@ Player::Player(int hp, int level, int exp) : _hp(hp), _level(level), _exp(exp)
 
 void Player::freeGraphics()
 {
+    IEntity::freeGraphics();
 }
 
 void Player::allocateGraphics()
 {
+    IEntity::allocateGraphics();
 }
 
 void Player::expUp()
 {
+    using EventArg = event::arg::PlayerEArg;
     if (++_exp == _level)
     {
         ++_level;
         _exp = 0;
-        notify(event::EventArg::PLAYER_LEVEL_UP);
+        notify({EventArg::Type::LEVEL_UP, 1});
     }
     else
     {
-        notify(event::EventArg::PLAYER_EXP_UP);
+        notify({EventArg::Type::EXP_UP, 1});
     }
 }
 

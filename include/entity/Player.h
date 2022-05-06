@@ -7,12 +7,12 @@
 #include "bn_sprite_ptr.h"
 #include "bn_vector.h"
 
-#include "event/EventArg.h"
+#include "event/arg/PlayerEArg.h"
 
 namespace crecat::entity
 {
 
-class Player final : public IEntity, public event::IObservable<event::EventArg>
+class Player final : public IEntity, public event::IObservable<event::arg::PlayerEArg>
 {
 public:
     static constexpr int MAX_HP = 10;

@@ -34,7 +34,7 @@ void Portrait::setPosition(const bn::fixed_point& position)
 void Portrait::setPosition(bn::fixed x, bn::fixed y)
 {
     IEntity::setPosition(x, y);
-    if (!_sprites.empty())
+    if (graphicsAllocated())
     {
         _sprites[0].set_position({x + OFFSET_LEFT, y + OFFSET_TOP});
         _sprites[1].set_position({x + OFFSET_LEFT, y + OFFSET_BOTTOM});
@@ -55,13 +55,13 @@ void Portrait::setY(bn::fixed y)
 
 void Portrait::freeGraphics()
 {
+    IEntity::freeGraphics();
     _sprites.clear();
 }
 
 void Portrait::allocateGraphics()
 {
-    if (!_sprites.empty())
-        return;
+    IEntity::allocateGraphics();
 
     const bn::fixed top = this->y() + OFFSET_TOP;
     const bn::fixed bottom = this->y() + OFFSET_BOTTOM;

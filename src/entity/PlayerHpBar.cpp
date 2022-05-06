@@ -1,6 +1,7 @@
 #include "entity/PlayerHpBar.h"
 
 #include "bn_assert.h"
+#include "bn_display.h"
 #include "bn_fixed_point.h"
 #include "bn_log.h"
 #include "bn_sprite_tiles_ptr.h"
@@ -12,11 +13,12 @@ namespace crecat::entity
 
 namespace
 {
+constexpr bn::fixed_point OBJ_POS = {36 - bn::display::width() / 2, 79 - bn::display::height() / 2};
 constexpr bn::fixed OFFSET_LOWER_HEART_Y = 44;
 constexpr bn::fixed OFFSET_Y_INC = -10;
 } // namespace
 
-PlayerHpBar::PlayerHpBar() : IEntity(-84, -1), _hp(MAX_HP)
+PlayerHpBar::PlayerHpBar() : IEntity(OBJ_POS), _hp(MAX_HP)
 {
 }
 
@@ -27,7 +29,7 @@ void PlayerHpBar::changeHp(int diff)
     _hp = _hp > MAX_HP ? MAX_HP : _hp;
     _hp = _hp < 0 ? 0 : _hp;
 
-    if (!_hpSprites.empty())
+    if (graphicsAllocated())
     {
         if (diff < 0)
             for (int i = prevHp - 1; i > _hp - 1; --i)
@@ -64,13 +66,14 @@ void PlayerHpBar::setY(bn::fixed y)
 
 void PlayerHpBar::freeGraphics()
 {
+    IEntity::freeGraphics();
+
     _hpSprites.clear();
 }
 
 void PlayerHpBar::allocateGraphics()
 {
-    if (!_hpSprites.empty())
-        return;
+    IEntity::allocateGraphics();
 
     for (int i = 0; i < MAX_HP; ++i)
     {

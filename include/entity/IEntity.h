@@ -23,20 +23,61 @@ public:
 
     virtual void update(){};
 
+    bool graphicsAllocated() const;
     const bn::fixed_point& position() const;
     bn::fixed x() const;
     bn::fixed y() const;
 
+    /**
+     * @brief Set the position.
+     * Don't forget to call parent `IEntity::setPosition()`, as this sets the `IEntity::_position` member!
+     *
+     * @param `position`
+     */
     virtual void setPosition(const bn::fixed_point& position);
+
+    /**
+     * @brief Set the position.
+     * Don't forget to call parent `IEntity::setPosition()`, as this sets the `IEntity::_position` member!
+     *
+     * @param `x`
+     * @param `y`
+     */
     virtual void setPosition(bn::fixed x, bn::fixed y);
+
+    /**
+     * @brief Set the x position.
+     * Don't forget to call parent `IEntity::setX()`, as this sets the `IEntity::_position` member!
+     *
+     * @param `x`
+     */
     virtual void setX(bn::fixed x);
+
+    /**
+     * @brief Set the y position.
+     * Don't forget to call parent `IEntity::setY()`, as this sets the `IEntity::_position` member!
+     *
+     * @param `y`
+     */
     virtual void setY(bn::fixed y);
 
-    virtual void freeGraphics(){};
-    virtual void allocateGraphics(){};
+    /**
+     * @brief Free graphics.
+     * Don't forget to call parent `IEntity::freeGrahpics()`, as this sets the `_graphicsAllocated` flag to `false` !
+     *
+     */
+    virtual void freeGraphics();
+
+    /**
+     * @brief Allocate graphics.
+     * Don't forget to call parent `IEntity::allocateGrahpics()`, as this sets the `_graphicsAllocated` flag to `true` !
+     *
+     */
+    virtual void allocateGraphics();
 
 private:
     bn::fixed_point _position;
+    bool _graphicsAllocated = false;
 };
 
 } // namespace crecat::entity

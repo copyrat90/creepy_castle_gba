@@ -19,7 +19,7 @@ void Hud::setPosition(const bn::fixed_point& position)
 void Hud::setPosition(bn::fixed x, bn::fixed y)
 {
     IEntity::setPosition(x, y);
-    if (_hudBg)
+    if (graphicsAllocated())
         _hudBg->set_position(position());
 }
 
@@ -35,41 +35,54 @@ void Hud::setY(bn::fixed y)
 
 void Hud::freeGraphics()
 {
+    IEntity::freeGraphics();
+
     _hudBg.reset();
     _playerHpBar.freeGraphics();
+    _enemyHpBar.freeGraphics();
 }
 
 void Hud::allocateGraphics()
 {
-    if (_hudBg)
-        return;
+    IEntity::allocateGraphics();
+
     _hudBg = bn::regular_bg_items::bg_hud.create_bg(position());
     _playerHpBar.allocateGraphics();
+    _enemyHpBar.allocateGraphics();
 }
 
-void Hud::onNotify(event::EventArg e)
+void Hud::onNotify(event::arg::PlayerEArg e)
 {
-    using EventArg = event::EventArg;
+    using EventArg = event::arg::PlayerEArg;
 
-    switch (e)
+    switch (e.type)
     {
-    case EventArg::PLAYER_LEVEL_UP:
+    case EventArg::Type::LEVEL_UP:
         BN_ERROR("TODO");
         break;
-    case EventArg::PLAYER_DAMAGE_1:
-        _playerHpBar.changeHp(-1);
+    case EventArg::Type::DAMAGE:
+        _playerHpBar.changeHp(-e.amount);
         break;
-    case EventArg::PLAYER_DAMAGE_2:
-        _playerHpBar.changeHp(-2);
+    case EventArg::Type::HP_REGEN:
+        _playerHpBar.changeHp(e.amount);
         break;
     default:
         break;
     }
+}
 
-    if ((int)EventArg::PLAYER_HP_REGEN_1 <= (int)e && (int)e <= (int)EventArg::PLAYER_HP_REGEN_9)
+void Hud::onNotify(event::arg::EnemyEArg e)
+{
+    using EventArg = event::arg::EnemyEArg;
+
+    switch (e.type)
     {
-        const int amount = (int)e - (int)EventArg::PLAYER_HP_REGEN_1 + 1;
-        _playerHpBar.changeHp(amount);
+    case EventArg::Type::DAMAGE:
+        _enemyHpBar.changeHp(-e.amount);
+        _enemyHpBar.setName(e.name);
+        break;
+    default:
+        break;
     }
 }
 
