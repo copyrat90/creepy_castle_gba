@@ -13,12 +13,15 @@
 #include "event/IObserve.h"
 #include "event/arg/Signal.h"
 
+#include "debug_view.h"
+
 namespace crecat::tests
 {
 
 void testObserverPattern()
 {
     BN_LOG("[TEST] tests::testObserverPattern()");
+    DEBUG_VIEW_INIT;
 
     struct MyEventArg
     {
@@ -95,6 +98,8 @@ void testObserverPattern()
     {
         subject1.update();
         subject2.update();
+
+        DEBUG_VIEW_UPDATE;
         bn::core::update();
     }
 }
@@ -102,6 +107,7 @@ void testObserverPattern()
 void testHud()
 {
     BN_LOG("[TEST] tests::testHud()");
+    DEBUG_VIEW_INIT;
 
     class TestPlayer final : public entity::IEntity, public event::IObservable<event::arg::PlayerEArg>
     {
@@ -109,15 +115,12 @@ void testHud()
         void update() final
         {
             using EventArg = event::arg::PlayerEArg;
-            if (bn::keypad::select_held())
-            {
-                if (bn::keypad::a_pressed())
-                    notify({EventArg::Type::DAMAGE, 1});
-                else if (bn::keypad::b_pressed())
-                    notify({EventArg::Type::DAMAGE, 2});
-                else if (bn::keypad::up_pressed())
-                    notify({EventArg::Type::HP_REGEN, 1});
-            }
+            if (bn::keypad::a_pressed())
+                notify({EventArg::Type::DAMAGE, 1});
+            else if (bn::keypad::b_pressed())
+                notify({EventArg::Type::DAMAGE, 2});
+            else if (bn::keypad::up_pressed())
+                notify({EventArg::Type::HP_REGEN, 1});
         }
     };
 
@@ -127,13 +130,10 @@ void testHud()
         void update() final
         {
             using EventArg = event::arg::EnemyEArg;
-            if (bn::keypad::select_held())
-            {
-                if (bn::keypad::l_pressed())
-                    notify({EventArg::Type::DAMAGE, 0, "Monsoon"});
-                else if (bn::keypad::r_pressed())
-                    notify({EventArg::Type::DAMAGE, 0, "Ant Queen"});
-            }
+            if (bn::keypad::l_pressed())
+                notify({EventArg::Type::DAMAGE, 0, "Monsoon"});
+            else if (bn::keypad::r_pressed())
+                notify({EventArg::Type::DAMAGE, 0, "Ant Queen"});
         }
     };
 
@@ -148,6 +148,8 @@ void testHud()
     {
         player.update();
         enemy.update();
+
+        DEBUG_VIEW_UPDATE;
         bn::core::update();
     }
 }
