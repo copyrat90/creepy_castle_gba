@@ -7,6 +7,7 @@
 #include "bn_regular_bg_ptr.h"
 
 #include "entity/EnemyHpBar.h"
+#include "entity/PlayerExpBar.h"
 #include "entity/PlayerHpBar.h"
 #include "event/arg/EnemyEArg.h"
 #include "event/arg/PlayerEArg.h"
@@ -25,6 +26,8 @@ public:
 public:
     Hud();
 
+    void update() final;
+
     void setPosition(const bn::fixed_point& position) final;
     void setPosition(bn::fixed x, bn::fixed y) final;
     void setX(bn::fixed x) final;
@@ -40,6 +43,7 @@ private:
 private:
     bn::optional<bn::regular_bg_ptr> _hudBg;
     PlayerHpBar _playerHpBar;
+    PlayerExpBar _playerExpBar;
     EnemyHpBar _enemyHpBar;
 };
 

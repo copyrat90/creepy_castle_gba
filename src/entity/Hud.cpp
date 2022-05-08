@@ -11,6 +11,13 @@ Hud::Hud()
 {
 }
 
+void Hud::update()
+{
+    _playerHpBar.update();
+    _playerExpBar.update();
+    _enemyHpBar.update();
+}
+
 void Hud::setPosition(const bn::fixed_point& position)
 {
     setPosition(position.x(), position.y());
@@ -39,6 +46,7 @@ void Hud::freeGraphics()
 
     _hudBg.reset();
     _playerHpBar.freeGraphics();
+    _playerExpBar.freeGraphics();
     _enemyHpBar.freeGraphics();
 }
 
@@ -48,6 +56,7 @@ void Hud::allocateGraphics()
 
     _hudBg = bn::regular_bg_items::bg_hud.create_bg(position());
     _playerHpBar.allocateGraphics();
+    _playerExpBar.allocateGraphics();
     _enemyHpBar.allocateGraphics();
 }
 
@@ -57,8 +66,9 @@ void Hud::onNotify(event::arg::PlayerEArg e)
 
     switch (e.type)
     {
+    case EventArg::Type::EXP_UP:
     case EventArg::Type::LEVEL_UP:
-        BN_ERROR("TODO");
+        _playerExpBar.changeExp(1);
         break;
     case EventArg::Type::DAMAGE:
         _playerHpBar.changeHp(-e.amount);

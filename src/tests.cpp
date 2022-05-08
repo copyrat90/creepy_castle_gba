@@ -117,10 +117,12 @@ void testHud()
             using EventArg = event::arg::PlayerEArg;
             if (bn::keypad::a_pressed())
                 notify({EventArg::Type::DAMAGE, 1});
-            else if (bn::keypad::b_pressed())
+            if (bn::keypad::b_pressed())
                 notify({EventArg::Type::DAMAGE, 2});
-            else if (bn::keypad::up_pressed())
+            if (bn::keypad::up_pressed())
                 notify({EventArg::Type::HP_REGEN, 1});
+            if (bn::keypad::right_pressed())
+                notify({EventArg::Type::EXP_UP, 1});
         }
     };
 
@@ -148,6 +150,7 @@ void testHud()
     {
         player.update();
         enemy.update();
+        hud.update();
 
         DEBUG_VIEW_UPDATE;
         bn::core::update();
