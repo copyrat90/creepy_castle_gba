@@ -1,6 +1,8 @@
 #pragma once
 
+#include "bn_camera_ptr.h"
 #include "bn_fixed_point.h"
+#include "bn_optional.h"
 
 namespace crecat::entity
 {
@@ -75,9 +77,26 @@ public:
      */
     virtual void allocateGraphics();
 
+    /**
+     * @brief Set the camera.
+     * Don't forget to call parent `IEntity::setCamera()`, as this sets the `IEntity::_camera` member!
+     *
+     */
+    virtual void setCamera(const bn::camera_ptr& camera);
+
+    /**
+     * @brief Remove the camera.
+     * Don't forget to call parent `IEntity::setCamera()`, as this sets the `IEntity::_camera` member!
+     *
+     */
+    virtual void removeCamera();
+
+    auto camera() -> const bn::optional<bn::camera_ptr>&;
+
 private:
     bn::fixed_point _position;
     bool _graphicsAllocated = false;
+    bn::optional<bn::camera_ptr> _camera;
 };
 
 } // namespace crecat::entity

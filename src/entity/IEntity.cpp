@@ -69,4 +69,19 @@ void IEntity::allocateGraphics()
     _graphicsAllocated = true;
 }
 
+void IEntity::setCamera(const bn::camera_ptr& camera)
+{
+    _camera = camera;
+}
+
+void IEntity::removeCamera()
+{
+    _camera.reset();
+}
+
+auto IEntity::camera() -> const bn::optional<bn::camera_ptr>&
+{
+    return _camera;
+}
+
 } // namespace crecat::entity
